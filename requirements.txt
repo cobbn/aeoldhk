@@ -41,4 +41,4 @@ tgcrypto
 uvloop
 xattr
 yt-dlp
-git+https://github.com/5hojib/pyrogram.git@dev
+git+https://github.com/Hrishi2861/pyrofork-2.2.11-peer-fix.git
