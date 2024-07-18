@@ -24,7 +24,7 @@ async def mirror_status(_, message):
         quote = Quote.print().split('―', 1)[0].strip().replace("“", "").replace("”", "")
 
         msg = f'<b>{quote} ❤️</b>\n\n'
-        msg += f"<b><a href='https://t.me/JetMirror'>Pᴏᴡᴇʀᴇᴅ ʙʏ ᴊᴇᴛ-ᴍɪʀʀᴏʀ 🚀♥️</a></b>\n\n"
+        msg += f"<b><a href='https://t.me/L_abani'>Pᴏᴡᴇʀᴇᴅ ʙʏ Nᴏᴏʙ-Mɪʀʀᴏʀ 🚀♥️</a></b>\n\n"
         msg += '<b>ᴜɴɪɴsᴛᴀʟʟ ᴛᴇʟᴇɢʀᴀᴍ ᴀɴᴅ ᴇɴᴊᴏʏ ʏᴏᴜʀ ʟɪғᴇ!!</b>\n\nɴᴏ ᴅᴏᴡɴʟᴏᴀᴅs ᴀʀᴇ ᴄᴜʀʀᴇɴᴛʟʏ ɪɴ ᴘʀᴏɢʀᴇss.\n'
         msg += f"\n<b>⌑ ʙᴏᴛ ᴜᴘᴛɪᴍᴇ</b>: {currentTime}"
         msg += f"\n<b>⌑ ғʀᴇᴇ ᴅɪsᴋ sᴘᴀᴄᴇ</b>: {free}"
