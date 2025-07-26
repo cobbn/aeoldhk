@@ -5,7 +5,11 @@ RUN chmod 777 /usr/src/app
 
 COPY . .
 
-RUN pip install --no-cache-dir --upgrade pip setuptools && \
-    pip install --no-cache-dir -r requirements.txt
+# Create virtual environment and install dependencies inside it
+RUN python3 -m venv /opt/venv && \
+    . /opt/venv/bin/activate && \
+    /opt/venv/bin/pip install --no-cache-dir --upgrade pip setuptools && \
+    /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
 
-CMD ["bash", "start.sh"]
+# Run your start.sh with virtualenv activated
+CMD ["/bin/bash", "-c", "source /opt/venv/bin/activate && bash start.sh"]
