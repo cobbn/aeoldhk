@@ -28,6 +28,7 @@ pillow
 psutil
 pybase64
 pycountry
+pytz
 pyroblack
 python-dotenv
 pyshorteners
@@ -41,4 +42,4 @@ tenacity
 tgcrypto-pyroblack
 uvloop
 xattr
-yt-dlp
+yt-dlp[default,curl-cffi]
