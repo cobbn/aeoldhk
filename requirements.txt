@@ -1,3 +1,4 @@
+git+https://github.com/cobbn/pyrofork2.2.11
 aiohttp
 aiofiles
 aioshutil
@@ -29,7 +30,7 @@ psutil
 pybase64
 pycountry
 pytz
-pyroblack
+#pyroblack
 python-dotenv
 pyshorteners
 python-magic
@@ -39,7 +40,7 @@ requests
 speedtest-cli
 telegraph
 tenacity
-tgcrypto-pyroblack
+tgcrypto<=1.2.3
 uvloop
 xattr
 yt-dlp[default,curl-cffi]
