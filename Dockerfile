@@ -3,8 +3,9 @@ FROM reapmr3/reaper-club:latest
 WORKDIR /usr/src/app
 RUN chmod 777 /usr/src/app
 
-# ✅ Install system build tools required for tgcrypto
-RUN apt-get update && apt-get install -y \
+# ✅ Remove invalid PPA and install build tools
+RUN rm -f /etc/apt/sources.list.d/deadsnakes-ubuntu-ppa-*.list && \
+    apt-get update && apt-get install -y \
     gcc \
     build-essential \
     libffi-dev \
