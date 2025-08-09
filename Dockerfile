@@ -10,15 +10,16 @@ RUN echo "=== Checking base image ===" && \
     which aria2 || echo "aria2 not found" && \
     ls -la /usr/bin/ | grep aria || echo "No aria binaries found"
 
-# Install build dependencies for compiling Python packages
-RUN apt-get update && apt-get install -y \
+# Remove unsupported PPAs (like deadsnakes) and install build dependencies
+RUN rm -f /etc/apt/sources.list.d/*deadsnakes*.list && \
+    apt-get update && apt-get install -y \
     gcc \
     g++ \
     python3-dev \
     dos2unix \
     curl \
     wget \
-    && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/*
 
 # Verify xria is available (since it should be in the base image)
 RUN echo "=== Verifying xria availability ===" && \
