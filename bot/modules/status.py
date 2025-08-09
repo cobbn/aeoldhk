@@ -21,7 +21,11 @@ async def mirror_status(_, message):
     if count == 0:
         currentTime = get_readable_time(time() - botStartTime)
         free = get_readable_file_size(disk_usage('/usr/src/app/downloads/').free)
-        quote = Quote.print().split('―', 1)[0].strip().replace("“", "").replace("”", "")
+
+        try:
+            quote = Quote.print().split('―', 1)[0].strip().replace("“", "").replace("”", "")
+        except OSError:
+            quote = "No quote available at the moment."
 
         msg = f'<b>{quote} ❤️</b>\n\n'
         msg += f"<b><a href='https://t.me/L_abani'>Pᴏᴡᴇʀᴇᴅ ʙʏ Nᴏᴏʙ-Mɪʀʀᴏʀ 🚀♥️</a></b>\n\n"
