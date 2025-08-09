@@ -21,11 +21,6 @@ RUN apt-get update && apt-get install -y \
     aria2 \
  && rm -rf /var/lib/apt/lists/*
 
-# Verify xria and aria2 are available
-RUN echo "=== Verifying xria & aria2 availability ===" && \
-    which xria && xria --version && \
-    which aria2c && aria2c --version
-
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
 
