@@ -11,7 +11,9 @@ RUN echo "=== Checking base image ===" && \
     ls -la /usr/bin/ | grep aria || echo "No aria binaries found"
 
 # Remove unsupported PPAs (like deadsnakes) and install build dependencies
-RUN rm -f /etc/apt/sources.list.d/*deadsnakes*.list && \
+RUN find /etc/apt/ -type f -name "*.list" -exec grep -l "deadsnakes" {} \; \
+    | xargs -r rm -f && \
+    apt-get clean && \
     apt-get update && apt-get install -y \
     gcc \
     g++ \
