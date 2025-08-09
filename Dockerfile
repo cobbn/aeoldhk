@@ -21,10 +21,6 @@ RUN apt-get update && apt-get install -y \
     aria2 \
  && rm -rf /var/lib/apt/lists/*
 
-# Copy xria from old image
-COPY --from=oldbase /usr/local/bin/xria /usr/local/bin/xria
-RUN chmod +x /usr/local/bin/xria
-
 # Verify xria and aria2 are available
 RUN echo "=== Verifying xria & aria2 availability ===" && \
     which xria && xria --version && \
