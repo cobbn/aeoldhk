@@ -29,7 +29,8 @@ psutil
 pybase64
 pycountry
 pytz
-pyrofork==2.2.11
+kurigram
+#pyrofork==2.2.11
 #pyroblack
 python-dotenv
 pyshorteners
