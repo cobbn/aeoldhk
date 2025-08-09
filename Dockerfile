@@ -1,5 +1,5 @@
 # Stage 1: Copy xria from the old base image
-FROM reapmr3/reaper-club:latest as oldbase
+FROM reapmr3/reaper-club:latest
 
 # Stage 2: Build a clean Heroku-compatible image
 FROM ubuntu:24.04
