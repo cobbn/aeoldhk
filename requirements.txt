@@ -29,8 +29,7 @@ psutil
 pybase64
 pycountry
 pytz
-kurigram
-#pyrofork==2.2.11
+pyrofork==2.2.11
 #pyroblack
 python-dotenv
 pyshorteners
@@ -41,7 +40,8 @@ requests
 speedtest-cli
 telegraph
 tenacity
-tgcrypto<=1.2.3
+tgcrypto-pyrofork
+#tgcrypto<=1.2.3
 uvloop
 xattr
 yt-dlp[default,curl-cffi]
