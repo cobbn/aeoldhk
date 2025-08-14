@@ -278,17 +278,16 @@ async def process_file(file_, user_id, dirpath=None, isMirror=False):
     suffix = user_dict.get('suffix', '')
     lcaption = user_dict.get('lcaption', '')
     metadata_key = user_dict.get('metadata', '') or config_dict['METADATA_KEY']
-
     prefile_ = file_
 
     if metadata_key and dirpath and isMkv(file_):
         file_ = await change_metadata(file_, dirpath, metadata_key)
 
-    file_ = re_sub(r'^www\S+\s*[-_]*\s*', '', file_)
+    file_ = re_sub(r'\b(www\.[^\s/$.?#].[^\s]* - )\b', '', file_)
     if remname:
         if not remname.startswith('|'):
             remname = f"|{remname}"
-        remname = remname.replace('\\s', ' ')
+        remname = remname.replace('\s', ' ')
         slit = remname.split("|")
         __newFileName = ospath.splitext(file_)[0]
         for rep in range(1, len(slit)):
@@ -304,13 +303,13 @@ async def process_file(file_, user_id, dirpath=None, isMirror=False):
 
     nfile_ = file_
     if prefix:
-        nfile_ = prefix.replace('\\s', ' ') + file_
-        prefix = re_sub(r'<.*?>', '', prefix).replace('\\s', ' ')
+        nfile_ = prefix.replace('\s', ' ') + file_
+        prefix = re_sub(r'<.*?>', '', prefix).replace('\s', ' ')
         if not file_.startswith(prefix):
             file_ = f"{prefix}{file_}"
 
     if suffix and not isMirror:
-        suffix = suffix.replace('\\s', ' ')
+        suffix = suffix.replace('\s', ' ')
         sufLen = len(suffix)
         fileDict = file_.split('.')
         _extIn = 1 + len(fileDict[-1])
@@ -320,14 +319,14 @@ async def process_file(file_, user_id, dirpath=None, isMirror=False):
             _newExtFileName = (_extOutName[:64 - (sufLen + _extIn)] + f"{suffix}.{fileDict[-1]}")
         file_ = _newExtFileName
     elif suffix:
-        suffix = suffix.replace('\\s', ' ')
+        suffix = suffix.replace('\s', ' ')
         file_ = f"{ospath.splitext(file_)[0]}{suffix}{ospath.splitext(file_)[1]}" if '.' in file_ else f"{file_}{suffix}"
 
     cap_mono = nfile_
     if lcaption and dirpath and not isMirror:
         def lowerVars(match):
             return f"{{{match.group(1).lower()}}}"
-        lcaption = lcaption.replace('\\|', '%%').replace('\\{', '&%&').replace('\\}', '$%$').replace('\\s', ' ')
+        lcaption = lcaption.replace('\|', '%%').replace('\{', '&%&').replace('\}', '$%$').replace('\s', ' ')
         slit = lcaption.split("|")
         slit[0] = re_sub(r'\{([^}]+)\}', lowerVars, slit[0])
         up_path = ospath.join(dirpath, prefile_)

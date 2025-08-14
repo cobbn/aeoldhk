@@ -242,22 +242,6 @@ function s_validate() {
 </script>
 </head>
 <body>
-  <!--© Designed and coded by @bipuldey19-Telegram-->
-    <header>
-      <div class="brand">
-        <img
-          src="https://graph.org/file/1a6ad157f55bc42b548df.png"
-          alt="logo"
-        />
-        <a href="https://t.me/hrishikesh2861">
-          <h2 class="name">Bittorrent Selection</h2>
-        </a>
-      </div>
-      <div class="social">
-        <a href="https://github.com/Hrishi2861/Aeon-Modified"><i class="fab fa-github"></i></a>
-        <a href="https://t.me/hrishikesh2861"><i class="fab fa-telegram"></i></a>
-      </div>
-    </header>
     <div id="sticks">
         <h4>Selected files: <b id="checked_files">0</b> of <b id="total_files">0</b></h4>
         <h4>Selected files size: <b id="checked_size">0</b> of <b id="total_size">0</b></h4>
@@ -641,13 +625,9 @@ section span{
           src="https://graph.org/file/1a6ad157f55bc42b548df.png"
           alt="logo"
         />
-        <a href="https://t.me/krn_adhikari">
+        <a href="https://t.me/acaatr">
           <h2 class="name">Bittorrent Selection</h2>
         </a>
-      </div>
-      <div class="social">
-        <a href="https://www.github.com/weebzone/WZML"><i class="fab fa-github"></i></a>
-        <a href="https://t.me/krn_adhikari"><i class="fab fa-telegram"></i></a>
       </div>
     </header>
     <section>
@@ -795,7 +775,7 @@ def set_priority(id_):
 
 @app.route('/')
 def homepage():
-    return "<h1>See WZML-X <a href='https://github.com/Hrishi2861/Aeon-Modified'>@GitHub</a> By <a href='https://github.com/Hrishi2861'>Code With Lord Puneet</a></h1>"
+    return "<a href='https://t.me/Reaperzclub'>Reaperzclub</a>"
 
 
 @app.errorhandler(Exception)

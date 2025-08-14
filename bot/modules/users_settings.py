@@ -72,12 +72,12 @@ async def get_user_settings(from_user, key=None, edit_type=None, edit_mode=None)
 
 
         text = f'<b>Universal Settings for {name}</b>\n\n'
-        text += f'<b>• YT-DLP Options:</b> <b><code>{ytopt}</code></b>\n'
-        text += f'<b>• Prefix:</b> <code>{prefix}</code>\n'
-        text += f'<b>• Suffix:</b> <code>{suffix}</code>\n'
-        text += f'<b>• Metadata:</b> <code>{metadata}</code>\n'
-        text += f'<b>• Attachment:</b> <code>{attachment}</code>\n'
-        text += f'<b>• Remname:</b> <code>{remname}</code>'
+        text += f'<b>YT-DLP Options:</b> <b><code>{ytopt}</code></b>\n'
+        text += f'<b>Prefix:</b> <code>{prefix}</code>\n'
+        text += f'<b>Suffix:</b> <code>{suffix}</code>\n'
+        text += f'<b>Metadata:</b> <code>{metadata}</code>\n'
+        text += f'<b>Attachment:</b> <code>{attachment}</code>\n'
+        text += f'<b>Remname:</b> <code>{remname}</code>'
         buttons.ibutton("Back", f"userset {user_id} back", "footer")
         buttons.ibutton("Close", f"userset {user_id} close", "footer")
         button = buttons.build_menu(2)
@@ -89,8 +89,8 @@ async def get_user_settings(from_user, key=None, edit_type=None, edit_mode=None)
         buttons.ibutton("User TDs", f"userset {user_id} user_tds")
 
         text = f'<b>Mirror Settings for {name}</b>\n\n'
-        text += f'<b>• Rclone Config:</b> {rccmsg}\n'
-        text += f'<b>• User TD Mode:</b> {tds_mode}'
+        text += f'<b>Rclone Config:</b> {rccmsg}\n'
+        text += f'<b>User TD Mode:</b> {tds_mode}'
 
         buttons.ibutton("Back", f"userset {user_id} back", "footer")
         buttons.ibutton("Close", f"userset {user_id} close", "footer")
@@ -124,13 +124,13 @@ async def get_user_settings(from_user, key=None, edit_type=None, edit_mode=None)
 
         SPLIT_SIZE = '4GB' if IS_PREMIUM_USER else '2GB'
         text = f'<b>Leech Settings for {name}</b>\n\n'
-        text += f'<b>• Leech split size:</b> {SPLIT_SIZE}\n'
-        text += f'<b>• Leech Type:</b> {ltype}\n'
-        text += f'<b>• Custom Thumbnail:</b> {thumbmsg}\n'
-        text += f'<b>• Media Group:</b> {media_group}\n'
-        text += f'<b>• Leech Caption:</b> <code>{escape(lcaption)}</code>\n'
-        text += f'<b>• Leech Dump:</b> <code>{ldump}</code>\n'
-        text += f'<b>• MediaInfo Mode:</b> <code>{mediainfo}</code>'
+        text += f'<b>Leech split size:</b> {SPLIT_SIZE}\n'
+        text += f'<b>Leech Type:</b> {ltype}\n'
+        text += f'<b>Custom Thumbnail:</b> {thumbmsg}\n'
+        text += f'<b>Media Group:</b> {media_group}\n'
+        text += f'<b>Leech Caption:</b> <code>{escape(lcaption)}</code>\n'
+        text += f'<b>Leech Dump:</b> <code>{ldump}</code>\n'
+        text += f'<b>MediaInfo Mode:</b> <code>{mediainfo}</code>'
 
         buttons.ibutton("Back", f"userset {user_id} back", "footer")
         buttons.ibutton("Close", f"userset {user_id} close", "footer")
@@ -177,7 +177,7 @@ async def update_user_settings(query, key=None, edit_type=None, edit_mode=None, 
     user_id = query.from_user.id
     thumbnail = f"Thumbnails/{user_id}.jpg"
     if not ospath.exists(thumbnail):
-        thumbnail = 'https://graph.org/Jet-Mirror-12-21'
+        thumbnail = 'https://te.legra.ph/file/237953bad476d0de0b8eb.jpg'
     await editMessage(query.message, msg, button, thumbnail)
 
 
@@ -187,7 +187,7 @@ async def user_settings(client, message):
     user_id = message.from_user.id
     thumbnail = f"Thumbnails/{user_id}.jpg"
     if not ospath.exists(thumbnail):
-        thumbnail = 'https://graph.org/Jet-Mirror-12-21'
+        thumbnail = 'https://te.legra.ph/file/237953bad476d0de0b8eb.jpg'
     x = await sendMessage(message, msg, button, thumbnail)
     await five_minute_del(message)
     await deleteMessage(x)

@@ -16,7 +16,7 @@ from functools import partial, wraps
 from concurrent.futures import ThreadPoolExecutor
 
 from aiohttp import ClientSession as aioClientSession
-from psutil import virtual_memory, cpu_percent, disk_usage
+from psutil import virtual_memory, cpu_percent, disk_usage, net_io_counters
 from requests import get as rget
 from mega import MegaApi
 from pyrogram.enums import ChatType
@@ -74,7 +74,7 @@ SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 STATUS_START = 0
 PAGES = 1
 PAGE_NO = 1
-STATUS_LIMIT = 4
+STATUS_LIMIT = 6
 
 class MirrorStatus:
     STATUS_UPLOADING = "Uploading"
@@ -145,16 +145,18 @@ async def get_user_tasks(user_id, maxtask):
     if tasks := await getAllDownload('all', user_id):
         return len(tasks) >= maxtask
 
+
 def bt_selection_buttons(id_):
     gid = id_[:8]
     pincode = ''.join([n for n in id_ if n.isdigit()][:4])
     buttons = ButtonMaker()
     BASE_URL = config_dict['BASE_URL']
-    buttons.ubutton("sᴇʟᴇᴄᴛ ғɪʟᴇs 🗳️", f"{BASE_URL}/app/files/{id_}?pin_code={pincode}")
-    #buttons.ibutton("Pincode", f"btsel pin {gid} {pincode}")
-    buttons.ibutton("ᴄᴀɴᴄᴇʟ ❌", f"btsel rm {gid} {id_}")
-    buttons.ibutton("ᴅᴏɴᴇ sᴇʟᴇᴄᴛɪɴɢ ✅", f"btsel done {gid} {id_}")
+    buttons.ubutton("Select", f"{BASE_URL}/app/files/{id_}")
+    buttons.ibutton("Pincode", f"btsel pin {gid} {pincode}")
+    buttons.ibutton("Cancel", f"btsel rm {gid} {id_}")
+    buttons.ibutton("Done Selecting", f"btsel done {gid} {id_}")
     return buttons.build_menu(2)
+
 
 async def get_telegraph_list(telegraph_content):
     path = [(await telegraph.create_page(title="Drive Search", content=content))["path"] for content in telegraph_content]
@@ -187,8 +189,8 @@ def progress_bar(pct):
         pct = float(pct.strip('%'))
     p = min(max(pct, 0), 100)
     cFull = int((p + 5)// 10)
-    p_str = '★' * cFull
-    p_str += '✩' * (10 - cFull)
+    p_str = '●' * cFull
+    p_str += '○' * (10 - cFull)
     return p_str
 
 
@@ -197,11 +199,13 @@ def source(self):
 
 
 def get_readable_message():
-    msg = '<b><a href="https://t.me/L_abani">ᴘᴏᴡᴇʀᴇᴅ ʙʏ Nᴏᴏʙ-Mɪʀʀᴏʀ ❤️🚀</a></b>\n\n'
+    msg = '<b><a href ="https://t.me/Reaperzclub">Powered By Reapers-Club</a></b>\n\n'
     button = None
     tasks = len(download_dict)
-    #msg_link = download.message.link
     currentTime = get_readable_time(time() - botStartTime)
+    sent = get_readable_file_size(net_io_counters().bytes_sent)
+    recv = get_readable_file_size(net_io_counters().bytes_recv)
+    traf = get_readable_file_size(net_io_counters().bytes_sent + net_io_counters().bytes_recv)
     if config_dict['BOT_MAX_TASKS']:
         bmax_task = f"/{config_dict['BOT_MAX_TASKS']}"
     else:
@@ -211,54 +215,34 @@ def get_readable_message():
         globals()['STATUS_START'] = STATUS_LIMIT * (PAGES - 1)
         globals()['PAGE_NO'] = PAGES
     for download in list(download_dict.values())[STATUS_START:STATUS_LIMIT+STATUS_START]:
-        msg += f"<b>{download.status()}:</b>\n"
-        msg += f"<b>\n⌑ ғɪʟᴇɴᴀᴍᴇ</b> » <i>{escape(f'{download.name()}')}</i>\n"
-        if download.status() not in [MirrorStatus.STATUS_SPLITTING, MirrorStatus.STATUS_SEEDING]:
-            msg += f"\n⌑ {progress_bar(download.progress())} » {download.progress()}"
-            msg += f"\n⌑ 💯 ᴅᴏɴᴇ: {download.processed_bytes()} of {download.size()}"
-            msg += f"\n⌑ 🚀 sᴘᴇᴇᴅ: {download.speed()}"
-            msg += f'\n⌑ ⏳ ᴇsᴛɪᴍᴀᴛᴇᴅ: {download.eta()}'
-            msg += f"\n⌑ 👤 ᴜsᴇʀ: {download.message.from_user.mention} \n⌑ 🔗 ᴜsᴇʀ ɪᴅ: <spoiler>{download.message.from_user.id}</spoiler>"
+        msg += f"<b>{download.status()} » {escape(f'{download.name()}')}</b>\n"
+        if download.status() not in [MirrorStatus.STATUS_SPLITTING, MirrorStatus.STATUS_SEEDING, MirrorStatus.STATUS_PROCESSING]:
+            msg += f"<blockquote><b>{progress_bar(download.progress())} » {download.speed()}</b>"
+            msg += f"\n<b>{download.processed_bytes()} of {download.size()} | {download.eta()}</b>"
+            msg += f"\n<b>user:</b> {source(download)}"
             if hasattr(download, 'seeders_num'):
                 try:
-                    msg += f"\n⌑ 🌱 sᴇᴇᴅᴇʀs: {download.seeders_num()} | 📥 ʟᴇᴇᴄʜᴇʀs: {download.leechers_num()}"
+                    msg += f"<b>| s/ʟ:</b> {download.seeders_num()}/{download.leechers_num()}"
                 except:
                     pass
         elif download.status() == MirrorStatus.STATUS_SEEDING:
-            msg += f"\n⌑ 💽 sɪᴢᴇ: {download.size()}"
-            msg += f"\n⌑ 🚀 sᴘᴇᴇᴅ: {download.upload_speed()}"
-            msg += f"\n⌑ 📈 ᴜᴘʟᴏᴀᴅᴇᴅ: {download.uploaded_bytes()}"
-            msg += f"\n⌑ 📟 ʀᴀᴛɪᴏ: {download.ratio()}"
-            msg += f"\n⌑ ⏳ ᴛɪᴍᴇ: {download.seeding_time()}"
+            msg += f"\nSize: {download.size()}"
+            msg += f"\nSpeed: {download.upload_speed()}"
+            msg += f"\nUploaded: {download.uploaded_bytes()}"
+            msg += f"\nRatio: {download.ratio()}"
+            msg += f"\nTime: {download.seeding_time()}"
         else:
-            msg += f"\n⌑ 💽 sɪᴢᴇ: {download.size()}"
-        msg += f"\n⌑ 💯 ᴇʟᴀᴘsᴇᴅ: {get_readable_time(time() - download.message.date.timestamp())}"
-        msg += f"\n<blockquote><b> ❌⚠️: /stop_{download.gid()[:8]}</b></blockquote>\n\n"
+            msg += f"\nSize: {download.size()}"
+        msg += f"<b> | 💣/stop_{download.gid()[:8]}</b></blockquote>\n\n"
     if len(msg) == 0:
         return None, None
-    
-    dl_speed = 0
-    up_speed = 0
-    for download in download_dict.values():
-            tstatus = download.status()
-            if tstatus == MirrorStatus.STATUS_DOWNLOADING:
-                dl_speed += text_to_bytes(download.speed())
-            elif tstatus == MirrorStatus.STATUS_UPLOADING:
-                up_speed += text_to_bytes(download.speed())
-            elif tstatus == MirrorStatus.STATUS_SEEDING:
-                up_speed += text_to_bytes(download.upload_speed())
-
     if tasks > STATUS_LIMIT:
         buttons = ButtonMaker()
-        buttons.ibutton("ᴘʀᴇᴠ ➡️", "status pre")
-        buttons.ibutton(f"ʀᴇғ 🔄 {PAGE_NO}/{PAGES}", "status ref")
-        buttons.ibutton("⬅️ ɴᴇxᴛ", "status nex")
+        buttons.ibutton("Prev", "status pre")
+        buttons.ibutton(f"{PAGE_NO}/{PAGES}", "status ref")
+        buttons.ibutton("Next", "status nex")
         button = buttons.build_menu(3)
-    msg += f"<b>⌑ ⚠️ Tᴀsᴋs</b>: {tasks}{bmax_task}"
-    msg += f"\n<b>⌑ ⏳ ʙᴏᴛ ᴜᴘᴛɪᴍᴇ</b>: {currentTime}"
-    msg += f"\n<b>⌑ 💽 ғʀᴇᴇ ᴅɪsᴋ sᴘᴀᴄᴇ</b>: {get_readable_file_size(disk_usage('/usr/src/app/downloads/').free)}"
-    msg += f"\n<b>⌑ 📉 ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ sᴘᴇᴇᴅ</b>: {get_readable_file_size(dl_speed)}/s"
-    msg += f"\n<b>⌑ 📈 ᴜᴘʟᴏᴀᴅɪɴɢ sᴘᴇᴇᴅ</b>: {get_readable_file_size(up_speed)}/s"
+    msg += f"<b>Tasks:</b> {tasks}{bmax_task} <b> | UPTM:</b> {currentTime} <b>| Free:</b> {get_readable_file_size(disk_usage('/usr/src/app/downloads/').free)} <b>| Band:</b> {traf}"
     return msg, button
 
 
@@ -313,7 +297,7 @@ def is_url(url):
 
 
 def is_gdrive_link(url):
-    return "drive.google.com" in url
+    return "drive.google.com" in url or "drive.usercontent.google.com" in url
 
 
 def is_telegram_link(url):
@@ -432,14 +416,9 @@ def new_task(func):
 
 
 async def sync_to_async(func, *args, wait=True, **kwargs):
-    import asyncio
     pfunc = partial(func, *args, **kwargs)
     future = bot_loop.run_in_executor(THREADPOOL, pfunc)
-    if wait:
-        # Ensure we await a compatible future
-        return await asyncio.wrap_future(future)
-    else:
-        return future
+    return await future if wait else future
 
 
 def async_to_sync(func, *args, wait=True, **kwargs):
