@@ -274,7 +274,7 @@ async def main():
     bot.add_handler(MessageHandler(bot_help, filters=command(BotCommands.HelpCommand) & CustomFilters.authorized))
     bot.add_handler(MessageHandler(stats, filters=command(BotCommands.StatsCommand) & CustomFilters.authorized))
     bot.add_handler(CallbackQueryHandler(AeonCallback, filters=regex(r'^aeon')))
-    LOGGER.info("❤️🚀 Nᴏᴏʙ Bot Started!")
+    LOGGER.info("Reaperzclub Bot Started!")
     signal(SIGINT, exit_clean_up)
 
 bot.loop.run_until_complete(main())
