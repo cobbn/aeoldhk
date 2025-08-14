@@ -14,6 +14,7 @@ from telegraph import upload_file
 from langcodes import Language
 from natsort import natsorted
 from magic import Magic
+import os
 
 from bot import LOGGER, MAX_SPLIT_SIZE, config_dict, user_data, aria2, xnox_client, GLOBAL_EXTENSION_FILTER
 from bot.modules.mediainfo import parseinfo
