@@ -278,6 +278,7 @@ async def process_file(file_, user_id, dirpath=None, isMirror=False):
     suffix = user_dict.get('suffix', '')
     lcaption = user_dict.get('lcaption', '')
     metadata_key = user_dict.get('metadata', '') or config_dict['METADATA_KEY']
+
     prefile_ = file_
 
     if metadata_key and dirpath and isMkv(file_):
@@ -287,7 +288,7 @@ async def process_file(file_, user_id, dirpath=None, isMirror=False):
     if remname:
         if not remname.startswith('|'):
             remname = f"|{remname}"
-    remname = remname.replace('\\s', ' ')
+        remname = remname.replace('\\s', ' ')
         slit = remname.split("|")
         __newFileName = ospath.splitext(file_)[0]
         for rep in range(1, len(slit)):
