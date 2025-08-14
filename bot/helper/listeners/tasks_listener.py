@@ -466,10 +466,10 @@ class MirrorLeechListener:
                 self.sameDir['total'] -= 1
         await self.message.reply_sticker("CAACAgUAAxkBAAEZdxRmJhSGaHTpbHXmny9aPbKz9gfqvQACOA0AAmtQOVRDTwRcAyjd3DQE")
         await asyncio.sleep(2)
-        msg = f'<pre><code><b>ʜᴇʏ, {self.tag}!\n</b></code></pre>'
-        msg += '<blockquote>ʏᴏᴜʀ ᴅᴏᴡɴʟᴏᴀᴅ ʜᴀs ʙᴇᴇɴ sᴛᴏᴘᴘᴇᴅ!\n\n'
-        msg += f'<b>ʀᴇᴀsᴏɴ:</b> {escape(error)}\n'
-        msg += f'<b>ᴇʟᴀᴘsᴇᴅ:</b> {get_readable_time(time() - self.message.date.timestamp())}</blockquote>'
+        msg = f'<pre><code><b>Hey, {self.tag}!\n</b></code></pre>'
+        msg += '<blockquote>Your download Stopped!\n\n'
+        msg += f'<b>Reason:</b> {escape(error)}\n'
+        msg += f'<b>Elapsed:</b> {get_readable_time(time() - self.message.date.timestamp())}</blockquote>'
         x = await sendMessage(self.message, msg, button)
         await delete_links(self.message)
         if self.botpmmsg:
@@ -509,10 +509,10 @@ class MirrorLeechListener:
             count = len(download_dict)
         await self.message.reply_sticker("CAACAgUAAxkBAAEZdwhmJhEtVHB_D4aTXr0aSehAiTmPMwACTQQAAgIW2FSpfUijSfRJzzQE")
         await asyncio.sleep(2)
-        msg = f'<pre><code><b>ʜᴇʏ, {self.tag}!\n</b></code></pre>'
-        msg += '<blockquote>ʏᴏᴜʀ ᴜᴘʟᴏᴀᴅ ʜᴀs ʙᴇᴇɴ sᴛᴏᴘᴘᴇᴅ!\n\n'
-        msg += f'<b>ʀᴇᴀsᴏɴ:</b> {escape(error)}\n'
-        msg += f'<b>ᴇʟᴀᴘsᴇᴅ:</b> {get_readable_time(time() - self.message.date.timestamp())}</blockquote>'
+        msg = f'<pre><code><b>Hey, {self.tag}!\n</b></code></pre>'
+        msg += '<blockquote>Your upload Stopped!\n\n'
+        msg += f'<b>Reason:</b> {escape(error)}\n'
+        msg += f'<b>Elapsed:</b> {get_readable_time(time() - self.message.date.timestamp())}</blockquote>'
         x = await sendMessage(self.message, msg)
         if self.linkslogmsg:
             await deleteMessage(self.linkslogmsg)
