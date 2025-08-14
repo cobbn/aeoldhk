@@ -287,7 +287,7 @@ async def process_file(file_, user_id, dirpath=None, isMirror=False):
     if remname:
         if not remname.startswith('|'):
             remname = f"|{remname}"
-    remname = remname.replace(r'\s', ' ')
+        remname = remname.replace(r'\s', ' ')
         slit = remname.split("|")
         __newFileName = ospath.splitext(file_)[0]
         for rep in range(1, len(slit)):
@@ -326,7 +326,7 @@ async def process_file(file_, user_id, dirpath=None, isMirror=False):
     if lcaption and dirpath and not isMirror:
         def lowerVars(match):
             return f"{{{match.group(1).lower()}}}"
-    lcaption = lcaption.replace(r'\|', '%%').replace(r'\{', '&%&').replace(r'\}', '$%$').replace(r'\s', ' ')
+        lcaption = lcaption.replace(r'\|', '%%').replace(r'\{', '&%&').replace(r'\}', '$%$').replace(r'\s', ' ')
         slit = lcaption.split("|")
         slit[0] = re_sub(r'\{([^}]+)\}', lowerVars, slit[0])
         up_path = ospath.join(dirpath, prefile_)
