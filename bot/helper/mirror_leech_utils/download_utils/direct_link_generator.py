@@ -1207,5 +1207,5 @@ def pcloud(url):
         except Exception as e:
             raise DirectDownloadLinkException(f"ERROR: {e.__class__.__name__}")
     if link := findall(r'.downloadlink.:..(https:.*)..', res.text):
-    return link[0].replace('\\/', '/')
+        return link[0].replace('\/', '/')
     raise DirectDownloadLinkException("ERROR: Direct link not found")
