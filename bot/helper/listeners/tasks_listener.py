@@ -338,7 +338,7 @@ class MirrorLeechListener:
             await RCTransfer.upload(up_path, size)
 
     async def onUploadComplete(self, link, size, files, folders, mime_type, name, rclonePath=''):
-        await self.message.reply_sticker("CAACAgIAAxkBAAEaEl5mYfFngn2qgP_VwtF4jGag8TDnuwACXVAAAkA_SEpKgc2Jieg3kzUE")
+        sticker_message = await self.message.reply_sticker("CAACAgIAAxkBAAEaEl5mYfFngn2qgP_VwtF4jGag8TDnuwACXVAAAkA_SEpKgc2Jieg3kzUE")
         await asyncio.sleep(2)
         await sticker_message.delete()
         user_id = self.message.from_user.id
@@ -465,7 +465,7 @@ class MirrorLeechListener:
             if self.sameDir and self.uid in self.sameDir['tasks']:
                 self.sameDir['tasks'].remove(self.uid)
                 self.sameDir['total'] -= 1
-        await self.message.reply_sticker("CAACAgIAAxkBAAEe7jpooYti_0KQCCN31TQENrUtxsmGogACi0wAAvcKEUhiqIPE38Gn0jYE")
+        sticker_message = await self.message.reply_sticker("CAACAgIAAxkBAAEe7jpooYti_0KQCCN31TQENrUtxsmGogACi0wAAvcKEUhiqIPE38Gn0jYE")
         await asyncio.sleep(2)
         await sticker_message.delete()
         msg = f'<pre><code><b>Hey, {self.tag}!\n</b></code></pre>'
@@ -509,7 +509,7 @@ class MirrorLeechListener:
             if self.uid in download_dict.keys():
                 del download_dict[self.uid]
             count = len(download_dict)
-        await self.message.reply_sticker("CAACAgIAAxkBAAEe7jpooYti_0KQCCN31TQENrUtxsmGogACi0wAAvcKEUhiqIPE38Gn0jYE")
+        sticker_message = await self.message.reply_sticker("CAACAgIAAxkBAAEe7jpooYti_0KQCCN31TQENrUtxsmGogACi0wAAvcKEUhiqIPE38Gn0jYE")
         await asyncio.sleep(2)
         await sticker_message.delete()
         msg = f'<pre><code><b>Hey, {self.tag}!\n</b></code></pre>'
