@@ -67,8 +67,7 @@ else:
 
 @new_thread
 async def stats(_, message):
-    sticker_message = await message.reply_sticker("CAACAgUAAxkBAAEazoJmuuDICuFVgNoHuifCwjiUcbonjAAC3AwAAqn6WFfzLzji62mu1zUE",
-   "file_unique_id": "AgAD3AwAAqn6WFc")
+    sticker_message = await message.reply_sticker("CAACAgUAAxkBAAEazoJmuuDICuFVgNoHuifCwjiUcbonjAAC3AwAAqn6WFfzLzji62mu1zUE")
     await asyncio.sleep(2)
     await sticker_message.delete()
     total, used, free, disk = disk_usage('/')
