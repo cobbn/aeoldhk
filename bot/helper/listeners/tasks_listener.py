@@ -338,26 +338,27 @@ class MirrorLeechListener:
             await RCTransfer.upload(up_path, size)
 
     async def onUploadComplete(self, link, size, files, folders, mime_type, name, rclonePath=''):
-        await self.message.reply_sticker("CAACAgIAAxkBAAEZdwRmJhCNfFRnXwR_lVKU1L9F3qzbtAAC4gUAAj-VzApzZV-v3phk4DQE")
+        await self.message.reply_sticker("CAACAgIAAxkBAAEaEl5mYfFngn2qgP_VwtF4jGag8TDnuwACXVAAAkA_SEpKgc2Jieg3kzUE")
         await asyncio.sleep(2)
+        await sticker_message.delete()
         user_id = self.message.from_user.id
         name, _ = await process_file(name, user_id, isMirror=not self.isLeech)
         user_dict = user_data.get(user_id, {})
         msg = f'<pre><code><b>{escape(name)}</b></code></pre>\n\n'
-        msg += f'<blockquote><b>⌑ sɪᴢᴇ: </b>{get_readable_file_size(size)}\n'
-        msg += f'<b>⌑ ᴇʟᴀᴘsᴇᴅ: </b>{get_readable_time(time() - self.message.date.timestamp())}\n'
+        msg += f'<blockquote><b>Size: </b>{get_readable_file_size(size)}\n'
+        msg += f'<b>Elapsed: </b>{get_readable_time(time() - self.message.date.timestamp())}\n'
         LOGGER.info(f'Task Done: {name}')
         buttons = ButtonMaker()
         iButton = ButtonMaker()
-        iButton.ibutton('Vɪᴇᴡ ɪɴ ɪɴʙᴏx 💯', f"aeon {user_id} private", 'header')
+        iButton.ibutton('Check in Inbox', f"aeon {user_id} private", 'header')
         iButton = extra_btns(iButton)
         if self.isLeech:
             if folders > 1:
-                msg += f'<b>⌑ ᴛᴏᴛᴀʟ ғɪʟᴇs: </b>{folders}\n'
+                msg += f'<b>Total files: </b>{folders}\n'
             if mime_type != 0:
-                msg += f'<b>⌑ ᴄᴏʀʀᴜᴘᴛᴇᴅ ғɪʟᴇs: </b>{mime_type}\n'
-            msg += f'<b>⌑ ᴜsᴇʀ ɪᴅ: </b><code>{self.message.from_user.id}</code>\n'
-            msg += f'<b>⌑ ᴜᴘʟᴏᴀᴅᴇᴅ ʙʏ: </b>{self.tag}</blockquote>\n\n'
+                msg += f'<b>Corrupted files: </b>{mime_type}\n'
+            msg += f'<b>User id: </b><code>{self.message.from_user.id}</code>\n'
+            msg += f'<b>Uploaded by: </b>{self.tag}</blockquote>\n\n'
             if not files:
                 if self.isPrivate:
                     msg += '<b>ғɪʟᴇs ʜᴀᴠᴇ ɴᴏᴛ ʙᴇᴇɴ sᴇɴᴛ ғᴏʀ ᴀɴ ᴜɴsᴘᴇᴄɪғɪᴇᴅ ʀᴇᴀsᴏɴ.</b>'
@@ -384,7 +385,7 @@ class MirrorLeechListener:
                 await sendMessage(self.botpmmsg, msg + lmsg + fmsg)
                 await deleteMessage(self.botpmmsg)
                 if self.isSuperGroup:
-                    await sendMessage(self.message, f'{msg}<b>ғɪʟᴇs ʜᴀs ʙᴇᴇɴ sᴇɴᴛ ᴛᴏ ʏᴏᴜʀ ɪɴʙᴏx.</b>', iButton.build_menu(1))
+                    await sendMessage(self.message, f'{msg}<b>Files has been sent to your Inbox.</b>', iButton.build_menu(1))
                 else:
                     await deleteMessage(self.botpmmsg)
             if self.seed:
@@ -397,9 +398,9 @@ class MirrorLeechListener:
                 return
         else:
             if mime_type == "Folder":
-                msg += f'<b>⌑ ᴛᴏᴛᴀʟ ғɪʟᴇs: </b>{files}\n'
+                msg += f'<b>Total files: </b>{files}\n'
             if link:
-                buttons.ubutton('☁️ ᴄʟᴏᴜᴅ ʟɪɴᴋ', link)
+                buttons.ubutton('☁️ Cloud Link', link)
                 INDEX_URL = self.index_link if self.drive_id else config_dict['INDEX_URL']
                 if not rclonePath:
                     if INDEX_URL:
@@ -407,16 +408,16 @@ class MirrorLeechListener:
                         share_url = f'{INDEX_URL}/{url_path}'
                         if mime_type == "Folder":
                             share_url += '/'
-                        buttons.ubutton('⚡️ ɪɴᴅᴇx ʟɪɴᴋ', share_url)
+                        buttons.ubutton('⚡️ Index Link', share_url)
                 buttons = extra_btns(buttons)
                 button = buttons.build_menu(2)
             elif rclonePath:
-                msg += f'<b>⌑ ᴘᴀᴛʜ: </b><code>{rclonePath}</code>\n'
+                msg += f'<b>Path: </b><code>{rclonePath}</code>\n'
                 button = None
                 buttons = extra_btns(buttons)
                 button = buttons.build_menu(2)
-            msg += f'<b>⌑ ᴜsᴇʀ ɪᴅ: </b><code>{self.message.from_user.id}</code>\n'
-            msg += f'<b>⌑ ᴜᴘʟᴏᴀᴅᴇᴅ ʙʏ: </b>{self.tag}</blockquote>\n\n'
+            msg += f'<b>User id: </b><code>{self.message.from_user.id}</code>\n'
+            msg += f'<b>Uploaded By: </b>{self.tag}</blockquote>\n\n'
 
             if config_dict['MIRROR_LOG_ID']:
                 log_msg = list((await sendMultiMessage(config_dict['MIRROR_LOG_ID'], msg, button)).values())[0]
@@ -425,7 +426,7 @@ class MirrorLeechListener:
             await sendMessage(self.botpmmsg, msg, button, 'Random')
             await deleteMessage(self.botpmmsg)
             if self.isSuperGroup:
-                await sendMessage(self.message, f'{msg} <b>ʟɪɴᴋs ʜᴀs ʙᴇᴇɴ sᴇɴᴛ ᴛᴏ ʏᴏᴜʀ ɪɴʙᴏx</b>', iButton.build_menu(1))
+                await sendMessage(self.message, f'{msg} <b>Links has been sent to your Inbox/b>', iButton.build_menu(1))
             else:
                 await deleteMessage(self.botpmmsg)
             if self.seed:
@@ -464,8 +465,9 @@ class MirrorLeechListener:
             if self.sameDir and self.uid in self.sameDir['tasks']:
                 self.sameDir['tasks'].remove(self.uid)
                 self.sameDir['total'] -= 1
-        await self.message.reply_sticker("CAACAgUAAxkBAAEZdxRmJhSGaHTpbHXmny9aPbKz9gfqvQACOA0AAmtQOVRDTwRcAyjd3DQE")
+        await self.message.reply_sticker("CAACAgIAAxkBAAEe7jpooYti_0KQCCN31TQENrUtxsmGogACi0wAAvcKEUhiqIPE38Gn0jYE")
         await asyncio.sleep(2)
+        await sticker_message.delete()
         msg = f'<pre><code><b>Hey, {self.tag}!\n</b></code></pre>'
         msg += '<blockquote>Your download Stopped!\n\n'
         msg += f'<b>Reason:</b> {escape(error)}\n'
@@ -507,8 +509,9 @@ class MirrorLeechListener:
             if self.uid in download_dict.keys():
                 del download_dict[self.uid]
             count = len(download_dict)
-        await self.message.reply_sticker("CAACAgUAAxkBAAEZdwhmJhEtVHB_D4aTXr0aSehAiTmPMwACTQQAAgIW2FSpfUijSfRJzzQE")
+        await self.message.reply_sticker("CAACAgIAAxkBAAEe7jpooYti_0KQCCN31TQENrUtxsmGogACi0wAAvcKEUhiqIPE38Gn0jYE")
         await asyncio.sleep(2)
+        await sticker_message.delete()
         msg = f'<pre><code><b>Hey, {self.tag}!\n</b></code></pre>'
         msg += '<blockquote>Your upload Stopped!\n\n'
         msg += f'<b>Reason:</b> {escape(error)}\n'

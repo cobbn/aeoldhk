@@ -67,7 +67,8 @@ else:
 
 @new_thread
 async def stats(_, message):
-    sticker_message = await message.reply_sticker("CAACAgIAAxkBAAEYonplzwrczhVu3I6HqPBzro3L2JU6YAACvAUAAj-VzAoTSKpoG9FPRjQE")
+    sticker_message = await message.reply_sticker("CAACAgUAAxkBAAEazoJmuuDICuFVgNoHuifCwjiUcbonjAAC3AwAAqn6WFfzLzji62mu1zUE",
+   "file_unique_id": "AgAD3AwAAqn6WFc")
     await asyncio.sleep(2)
     await sticker_message.delete()
     total, used, free, disk = disk_usage('/')
@@ -85,8 +86,8 @@ async def stats(_, message):
         '⚡️ Cʟᴏɴᴇ'     : config_dict.get('CLONE_LIMIT',    '∞'),
         'Ⓜ️ Mᴇɢᴀ'     : config_dict.get('MEGA_LIMIT',     '∞'),
         '👤 Usᴇʀ ᴛᴀsᴋ': config_dict.get('USER_MAX_TASKS', '∞')}
-    system_info = f'<b>{quote}</b>\n\n'\
-        f'<b><a href="https://t.me/L_abani">Pᴏᴡᴇʀᴇᴅ ʙʏ Nᴏᴏʙ-Mɪʀʀᴏʀ 🚀♥️</a></b>\n\n'\
+    system_info = f''\
+        f'<b><a href="https://t.me/Reaperzclub">Powered by Reaperzclub</a></b>\n\n'\
         f'<b>Sʏsᴛᴇᴍ sᴛᴀᴛs 🚀♥️</b>\n\n'\
         f'🤖 Bᴏᴛ ᴜᴘᴛɪᴍᴇ : {currentTime}\n'\
         f'🖥️ Sʏs ᴜᴘᴛɪᴍᴇ : {osUptime}\n'\
@@ -96,7 +97,7 @@ async def stats(_, message):
         f'🪫 Fʀᴇᴇ sᴘᴀᴄᴇ : {get_readable_file_size(free)}\n'\
         f'💯 Tᴏᴛᴀʟ sᴘᴀᴄᴇ: {get_readable_file_size(total)}\n\n'\
             
-    limitations = f'<b>Lɪᴍɪᴛᴀᴛɪᴏɴs 🚀♥️</b>\n\n'
+    limitations = f'<b>Limits</b>\n\n'
     
     for k, v in limit_mapping.items():
         if v == '':
@@ -117,7 +118,7 @@ async def stats(_, message):
 
 @new_thread
 async def start(client, message):
-    sticker_message = await message.reply_sticker("CAACAgIAAxkBAAEXyPRledQ6luKt1QABSPMPi2s4rgH3xMUAAmkdAALpI4hJ8xCGgSybQv8zBA")
+    sticker_message = await message.reply_sticker("CAACAgIAAxkBAAEbmiRnHnIi4VclqHgG2UG0Rau_cfgpMgACmWEAAvzm-EgDgDn0WjzMnTYE")
     await asyncio.sleep(2)
     await sticker_message.delete()
     buttons = ButtonMaker()
@@ -158,7 +159,7 @@ async def start(client, message):
 
 
 async def restart(client, message):
-    sticker_message = await message.reply_sticker("CAACAgUAAxkBAAEXrSRlbwYlArKGw0lVGUGHquKMqbu3fQACLggAAmCIwVXm28BgWp1jmzME")
+    sticker_message = await message.reply_sticker("CAACAgIAAxkBAAEaa3hmjAV--jMjVhU_LHAcu6Os7v5RdwAC5lAAAu-aMUnKuqm1iLx9hjUE")
     await asyncio.sleep(2)
     await sticker_message.delete()
     restart_message = await sendMessage(message, 'Restarting...')
