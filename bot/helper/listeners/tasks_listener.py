@@ -426,7 +426,7 @@ class MirrorLeechListener:
             await sendMessage(self.botpmmsg, msg, button, 'Random')
             await deleteMessage(self.botpmmsg)
             if self.isSuperGroup:
-                await sendMessage(self.message, f'{msg} <b>Links has been sent to your Inbox/b>', iButton.build_menu(1))
+                await sendMessage(self.message, f'{msg} <b>Links has been sent to your Inbox.</b>', iButton.build_menu(1))
             else:
                 await deleteMessage(self.botpmmsg)
             if self.seed:
